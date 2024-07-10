@@ -72,7 +72,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, stratif
 
 #Predições 
 if st.button('Enviar'):
-    model = joblib.load('xgb.joblib')
+    model = joblib.load('/mount/src/Grupo69/xgb.joblib')
     final_pred = model.predict(df_aluno_amostra)
     if final_pred[-1] == 1:
         st.success('### Parabéns! Você Fez a Virada')
