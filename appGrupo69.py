@@ -2,7 +2,7 @@
 import streamlit as st 
 import pandas as pd
 from sklearn.model_selection import train_test_split
-#from utils import DropFeatures, OneHotEncodingNames, OrdinalFeature, MinMaxWithFeatNames
+from utils import DropFeatures, OneHotEncodingNames, OrdinalFeature, MinMaxWithFeatNames
 from sklearn.pipeline import Pipeline
 import joblib
 from joblib import load
@@ -17,23 +17,23 @@ st.warning('Preencha o formulário com todos os Indicadores do aluno e clique **
 
 # IAN
 st.write('Indicador de Adequação de Nível ')
-ian = float(st.slider('IAN ', 0, 10))
+ian = float(st.slider('IAN ', min_value=0.0, max_value=10.0, value=5.0, step=0.1, format="%f" ))
 
 # IDA
 st.write('Indicador de Desenvolvimento Acadêmico')
-ida = float(st.slider('IDA ', 0, 10))
+ida = float(st.slider('IDA ',min_value=0.0, max_value=10.0, value=5.0, step=0.1, format="%f" ))
 
 # IDG
 st.write('Indicador de Engajamento')
-idg = float(st.slider('IEG ', 0, 10))
+idg = float(st.slider('IEG ', min_value=0.0, max_value=10.0, value=5.0, step=0.1, format="%f" ))
 
 # IAA
 st.write('Indicador de Auto Avaliação')
-iaa = float(st.slider('IAA ', 0, 10))
+iaa = float(st.slider('IAA ', min_value=0.0, max_value=10.0, value=5.0, step=0.1, format="%f" ))
 
 # IPS
 st.write('Indicador Psico Social')
-ips = float(st.slider('IPS ', 0, 10))
+ips = float(st.slider('IPS ', min_value=0.0, max_value=10.0, value=5.0, step=0.1, format="%f" ))
 
 # IPP
 st.write('IPP')
@@ -41,8 +41,8 @@ st.write('Indicador Psico Pedagógico')
 ipp = float(st.slider('Selecione o IPP ', 0, 10))
 
 # IPV
-st.write('Indicador Ponto de Virada')
-ipv = float(st.slider('IPV ', 0, 10))
+#st.write('Indicador Ponto de Virada')
+#ipv = float(st.slider('IPV ', 0, 10))
 
 # Lista de todas as variáveis: 
 novo_aluno = [[ ian, 
@@ -50,8 +50,9 @@ novo_aluno = [[ ian,
                idg,
                iaa, 
                ips, 
-               ipp, 
-               ipv]]
+               ipp 
+               #ipv
+               ]]
             
 
 
@@ -72,7 +73,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, stratif
 
 #Predições 
 if st.button('Enviar'):
-    model = joblib.load('/mount/src/grupo69/xgb.joblib')
+    model = joblib.load('xgb.joblib')
     final_pred = model.predict(df_aluno_amostra)
     if final_pred[-1] == 1:
         st.success('### Parabéns! Você Fez a Virada')
